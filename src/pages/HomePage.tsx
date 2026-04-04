@@ -40,7 +40,7 @@ export default function HomePage() {
       </div>
 
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-foreground">안녕하세요 ✨</h1>
+        <h1 className="text-xl font-bold text-foreground">안녕하세요</h1>
         <p className="text-muted-foreground text-sm mt-1">
           오늘도 아름다운 피부를 위해 케어하세요
         </p>
