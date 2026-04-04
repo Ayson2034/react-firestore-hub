@@ -97,16 +97,9 @@ export async function hasCompletedToday(userId: string): Promise<boolean> {
   }
 }
 
-// Care Programs
+// Care Programs — always use local defaults (Firestore overrides removed)
 export async function getCarePrograms(): Promise<CareProgram[]> {
-  try {
-    const q = query(collection(db, "care_programs"), where("isActive", "==", true));
-    const snap = await getDocs(q);
-    if (snap.empty) return defaultCarePrograms;
-    return snap.docs.map((d) => ({ id: d.id, ...d.data() } as CareProgram));
-  } catch {
-    return defaultCarePrograms;
-  }
+  return defaultCarePrograms;
 }
 
 // Usage Videos
