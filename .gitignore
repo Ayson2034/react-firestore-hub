@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Capacitor native builds (regenerated with cap sync)
+# Keep android/ and ios/ in git for CI builds
+android/app/build/
+ios/App/build/
+ios/App/Pods/
+*.keystore
