@@ -4,8 +4,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { hasCompletedToday, getCareLogs, calculateChallengeStats } from "@/services/firestore";
 import { isRfDay } from "@/data/carePrograms";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle, Flame, Zap, Trophy, Shield } from "lucide-react";
+import { CheckCircle, Flame, Zap, Trophy, Shield, Sparkles } from "lucide-react";
 import { format } from "date-fns";
+import logo from "@/assets/logo.png";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -31,10 +32,15 @@ export default function HomePage() {
   const warrantyValid = new Date(user.warrantyExpiresAt) > new Date();
 
   return (
-    <div className="px-5 pt-8 pb-4 animate-fade-in">
+    <div className="px-5 pt-6 pb-4 animate-fade-in">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground">안녕하세요 👋</h1>
+      <div className="flex items-center justify-between mb-6">
+        <img src={logo} alt="조선힐러" className="h-10 object-contain" />
+        <Sparkles className="w-5 h-5 text-primary-light" />
+      </div>
+
+      <div className="mb-6">
+        <h1 className="text-xl font-bold text-foreground">안녕하세요 ✨</h1>
         <p className="text-muted-foreground text-sm mt-1">
           오늘도 아름다운 피부를 위해 케어하세요
         </p>
@@ -43,17 +49,17 @@ export default function HomePage() {
       {/* Care Start Button */}
       <button
         onClick={() => navigate("/care-select")}
-        className={`w-full rounded-2xl p-6 text-center transition-all active:scale-[0.98] ${
+        className={`w-full rounded-3xl p-6 text-center transition-all active:scale-[0.98] shadow-lg ${
           completedToday
             ? "bg-success text-success-foreground"
-            : "bg-primary text-primary-foreground animate-pulse-gold"
+            : "bg-gradient-to-r from-primary to-primary-light text-primary-foreground"
         }`}
       >
         <div className="flex items-center justify-center gap-2 mb-2">
           {completedToday ? (
-            <CheckCircle className="w-8 h-8" />
+            <CheckCircle className="w-7 h-7" />
           ) : (
-            <Zap className="w-8 h-8" />
+            <Zap className="w-7 h-7" />
           )}
         </div>
         <p className="text-lg font-bold">
@@ -69,14 +75,14 @@ export default function HomePage() {
       </button>
 
       {/* 90-day Challenge */}
-      <div className="mt-6 rounded-2xl border border-border p-5 bg-card">
+      <div className="mt-5 rounded-3xl glass-card p-5">
         <div className="flex items-center gap-2 mb-3">
           <Trophy className="w-5 h-5 text-challenge-gold" />
-          <h2 className="font-bold text-foreground">90일 챌린지</h2>
+          <h2 className="font-bold text-foreground text-sm">90일 챌린지</h2>
         </div>
         <Progress
           value={(stats.streak / 90) * 100}
-          className="h-3 mb-3 [&>div]:bg-challenge-gold"
+          className="h-2.5 mb-3 rounded-full [&>div]:bg-challenge-gold [&>div]:rounded-full"
         />
         <p className="text-sm text-muted-foreground">
           <span className="text-foreground font-bold">{stats.streak}일</span> / 90일
@@ -85,14 +91,14 @@ export default function HomePage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 gap-3 mt-4">
-        <div className="rounded-2xl border border-border p-4 bg-card">
+        <div className="rounded-3xl glass-card p-4">
           <div className="flex items-center gap-2 mb-1">
             <Flame className="w-4 h-4 text-primary-light" />
             <span className="text-xs text-muted-foreground">연속 사용일</span>
           </div>
           <p className="text-2xl font-bold text-foreground">{loading ? "-" : stats.streak}일</p>
         </div>
-        <div className="rounded-2xl border border-border p-4 bg-card">
+        <div className="rounded-3xl glass-card p-4">
           <div className="flex items-center gap-2 mb-1">
             <CalendarIcon className="w-4 h-4 text-primary-light" />
             <span className="text-xs text-muted-foreground">누적 사용일</span>
@@ -102,14 +108,14 @@ export default function HomePage() {
       </div>
 
       {/* Warranty Info */}
-      <div className="mt-4 rounded-2xl border border-border p-4 bg-card">
+      <div className="mt-4 rounded-3xl glass-card p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-foreground">정품 보증</span>
           </div>
           <span
-            className={`text-xs px-2 py-1 rounded-full font-medium ${
+            className={`text-xs px-3 py-1 rounded-full font-medium ${
               warrantyValid
                 ? "bg-success/10 text-success"
                 : "bg-destructive/10 text-destructive"
