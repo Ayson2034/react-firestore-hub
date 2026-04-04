@@ -111,15 +111,35 @@ export default function CareTimerPage() {
     }
   }, []);
 
-  // Auto-navigate to home when complete
+  // Auto-navigate to home after showing completion message
   useEffect(() => {
     if (isComplete) {
-      navigate("/");
+      const timer = setTimeout(() => navigate("/"), 6000);
+      return () => clearTimeout(timer);
     }
   }, [isComplete, navigate]);
 
   if (isComplete) {
-    return null;
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-timer-bg text-timer-foreground px-8 animate-fade-in">
+        <CheckCircle className="w-16 h-16 text-primary mb-6" />
+        <p className="text-center text-base leading-relaxed text-timer-foreground/90">
+          오늘도 꾸준함을 지켜주셔서<br />
+          고객님 피부 대신 감사 인사 올립니다 :)
+        </p>
+        <p className="text-center text-sm leading-relaxed text-timer-foreground/60 mt-4">
+          피부는 고객님의 꾸준함을 가장 오래 기억합니다.<br />
+          꼭 기억해주세요.
+        </p>
+        <Button
+          onClick={() => navigate("/")}
+          variant="outline"
+          className="mt-8 border-timer-foreground/20 text-timer-foreground"
+        >
+          홈으로 돌아가기
+        </Button>
+      </div>
+    );
   }
 
   const minutes = Math.floor(timeLeft / 60);

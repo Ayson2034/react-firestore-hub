@@ -42,7 +42,7 @@ export default function HomePage() {
       <div className="mb-6">
         <h1 className="text-xl font-bold text-foreground">안녕하세요</h1>
         <p className="text-muted-foreground text-sm mt-1">
-          오늘도 아름다운 피부를 위해 케어하세요
+          비싼 시술보다 중요한 건<br />매일 5분입니다.
         </p>
       </div>
 
