@@ -111,22 +111,15 @@ export default function CareTimerPage() {
     }
   }, []);
 
+  // Auto-navigate to home when complete
+  useEffect(() => {
+    if (isComplete) {
+      navigate("/");
+    }
+  }, [isComplete, navigate]);
+
   if (isComplete) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-timer-bg text-timer-foreground px-6 animate-fade-in">
-        <CheckCircle className="w-20 h-20 text-success mb-6" />
-        <h1 className="text-2xl font-bold mb-2">케어 완료! ✨</h1>
-        <p className="text-timer-foreground/70 text-center mb-8">
-          오늘도 수고하셨어요.<br />꾸준한 케어가 피부를 바꿉니다.
-        </p>
-        <Button
-          onClick={() => navigate("/")}
-          className="w-full max-w-xs h-12 rounded-xl text-base"
-        >
-          홈으로 돌아가기
-        </Button>
-      </div>
-    );
+    return null;
   }
 
   const minutes = Math.floor(timeLeft / 60);
