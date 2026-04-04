@@ -181,9 +181,15 @@ export default function CareTimerPage() {
             <div className="text-[80px] font-bold leading-none tabular-nums mb-4">
               {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
             </div>
-            <p className="text-timer-foreground/60 text-sm text-center max-w-xs mb-10">
+            <p className="text-timer-foreground/60 text-sm text-center max-w-xs mb-2">
               {currentStep.guideText}
             </p>
+            {currentStep.direction && (
+              <p className="text-primary text-sm font-medium text-center max-w-xs mb-10 flex items-center gap-1.5">
+                <span>👆</span> {currentStep.direction}
+              </p>
+            )}
+            {!currentStep.direction && <div className="mb-10" />}
             <div className="flex items-center gap-6">
               <button
                 onClick={handleStop}

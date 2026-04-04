@@ -21,6 +21,7 @@ export interface CareStep {
   name: string;
   durationSec: number;
   guideText: string;
+  direction?: string;
   isPrep: boolean;
 }
 
