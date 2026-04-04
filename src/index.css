@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,45 +6,45 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --background: 330 20% 99%;
+    --foreground: 340 10% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 340 10% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 340 10% 15%;
 
-    --primary: 30 32% 41%;
+    --primary: 340 45% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --primary-light: 25 50% 64%;
-    --primary-dark: 30 32% 27%;
+    --primary-light: 340 50% 72%;
+    --primary-dark: 340 40% 38%;
 
-    --secondary: 25 30% 90%;
-    --secondary-foreground: 30 32% 27%;
+    --secondary: 330 30% 95%;
+    --secondary-foreground: 340 40% 38%;
 
-    --muted: 25 20% 94%;
-    --muted-foreground: 0 0% 42%;
+    --muted: 330 15% 95%;
+    --muted-foreground: 340 5% 50%;
 
-    --accent: 25 30% 90%;
-    --accent-foreground: 30 32% 27%;
+    --accent: 330 30% 93%;
+    --accent-foreground: 340 40% 38%;
 
     --destructive: 4 74% 56%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 122 39% 49%;
+    --success: 160 50% 45%;
     --success-foreground: 0 0% 100%;
 
-    --border: 25 22% 88%;
-    --input: 25 22% 88%;
-    --ring: 30 32% 41%;
+    --border: 330 15% 90%;
+    --input: 330 15% 90%;
+    --ring: 340 45% 55%;
 
     --radius: 1rem;
 
-    --challenge-gold: 51 100% 50%;
+    --challenge-gold: 38 90% 55%;
 
-    --timer-bg: 240 33% 14%;
+    --timer-bg: 340 30% 12%;
     --timer-foreground: 0 0% 100%;
 
     --sidebar-background: 0 0% 98%;
@@ -74,5 +74,9 @@
 @layer utilities {
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-md border border-border/50 shadow-sm;
   }
 }

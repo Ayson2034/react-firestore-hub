@@ -14,7 +14,7 @@ export default function MainLayout() {
       <main className="flex-1 pb-20">
         <Outlet />
       </main>
-      <nav className="fixed bottom-0 left-0 right-0 bg-background border-t border-border safe-bottom z-50">
+      <nav className="fixed bottom-0 left-0 right-0 bg-background/80 backdrop-blur-lg border-t border-border/50 safe-bottom z-50">
         <div className="max-w-[480px] mx-auto flex">
           {tabs.map(({ to, icon: Icon, label }) => (
             <NavLink
@@ -27,7 +27,7 @@ export default function MainLayout() {
                 }`
               }
             >
-              <Icon className="w-5 h-5 mb-1" />
+              <Icon className="w-5 h-5 mb-1" strokeWidth={1.5} />
               {label}
             </NavLink>
           ))}

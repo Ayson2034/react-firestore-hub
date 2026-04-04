@@ -5,6 +5,7 @@ import { getDeviceSerial, createUser } from "@/services/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import logo from "@/assets/logo.png";
 
 export default function RegisterPage() {
   const [phone, setPhone] = useState("");
@@ -26,7 +27,6 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      // Check serial
       const serial = await getDeviceSerial(serialNo);
       if (!serial) {
         setError("존재하지 않는 정품번호입니다");
@@ -64,44 +64,46 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-background">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-gradient-to-b from-secondary/50 to-background">
       <div className="w-full max-w-sm animate-fade-in">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-primary">회원가입</h1>
-          <p className="text-muted-foreground mt-2 text-sm">정품번호를 등록하고 케어를 시작하세요</p>
+        <div className="flex flex-col items-center mb-10">
+          <img src={logo} alt="조선힐러" className="h-14 object-contain" />
+          <p className="text-muted-foreground mt-4 text-sm tracking-wide">
+            정품번호를 등록하고 케어를 시작하세요
+          </p>
         </div>
 
         <form onSubmit={handleRegister} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="phone">휴대폰번호</Label>
+            <Label htmlFor="phone" className="text-xs font-medium tracking-wide text-muted-foreground">휴대폰번호</Label>
             <Input
               id="phone"
               type="tel"
               placeholder="01012345678"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="h-12 rounded-xl"
+              className="h-12 rounded-2xl bg-card border-border/60 focus:border-primary/50 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="age">나이</Label>
+            <Label htmlFor="age" className="text-xs font-medium tracking-wide text-muted-foreground">나이</Label>
             <Input
               id="age"
               type="number"
               placeholder="30"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="h-12 rounded-xl"
+              className="h-12 rounded-2xl bg-card border-border/60 focus:border-primary/50 transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="serial">정품번호</Label>
+            <Label htmlFor="serial" className="text-xs font-medium tracking-wide text-muted-foreground">정품번호</Label>
             <Input
               id="serial"
               placeholder="JH-XXXX-XXX"
               value={serialNo}
               onChange={(e) => setSerialNo(e.target.value.toUpperCase())}
-              className="h-12 rounded-xl"
+              className="h-12 rounded-2xl bg-card border-border/60 focus:border-primary/50 transition-colors"
             />
           </div>
 
@@ -110,13 +112,13 @@ export default function RegisterPage() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-12 rounded-xl text-base font-medium"
+            className="w-full h-12 rounded-2xl text-base font-medium shadow-md hover:shadow-lg transition-all"
           >
             {loading ? "등록 중..." : "회원가입"}
           </Button>
         </form>
 
-        <p className="text-center mt-6 text-sm text-muted-foreground">
+        <p className="text-center mt-8 text-sm text-muted-foreground">
           이미 등록하셨나요?{" "}
           <Link to="/login" className="text-primary font-medium underline-offset-4 hover:underline">
             로그인
