@@ -12,11 +12,9 @@ export default function CareSelectPage() {
 
   useEffect(() => {
     getCarePrograms().then((data) => {
-      // Filter: on non-RF days, hide RF-required programs
-      const filtered = rfToday ? data : data.filter((p) => !p.rfRequired);
-      setPrograms(filtered);
+      setPrograms(data);
     });
-  }, [rfToday]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background px-5 pt-6 pb-8 animate-fade-in">
