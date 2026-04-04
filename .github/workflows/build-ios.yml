@@ -27,12 +27,22 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync ios
 
+      - name: Install CocoaPods dependencies
+        working-directory: ios/App
+        run: pod install --repo-update || true
+
       - name: Build iOS (unsigned)
         working-directory: ios/App
         run: |
-          xcodebuild -workspace App.xcworkspace \
+          if [ -d "App.xcworkspace" ]; then
+            PROJ_FLAG="-workspace App.xcworkspace"
+          else
+            PROJ_FLAG="-project App.xcodeproj"
+          fi
+          xcodebuild $PROJ_FLAG \
             -scheme App \
             -configuration Release \
+            -sdk iphoneos \
             -archivePath build/App.xcarchive \
             archive \
             CODE_SIGNING_ALLOWED=NO \
