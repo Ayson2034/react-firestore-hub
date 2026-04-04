@@ -69,8 +69,8 @@ export default function HomePage() {
           {completedToday
             ? "내일도 함께해요"
             : rfToday
-            ? "오늘은 RF 케어일 🔥"
-            : "오늘은 회복일 💆"}
+            ? "오늘은 RF 케어일"
+            : "오늘은 회복일"}
         </p>
       </button>
 
