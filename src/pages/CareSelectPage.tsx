@@ -31,7 +31,7 @@ export default function CareSelectPage() {
             오늘은 RF 케어일입니다
           </span>
         ) : (
-          "오늘은 회복일입니다 💆"
+          "오늘은 회복일입니다"
         )}
       </p>
 

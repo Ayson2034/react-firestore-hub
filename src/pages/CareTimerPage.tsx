@@ -179,7 +179,7 @@ export default function CareTimerPage() {
             </p>
             {currentStep.direction && (
               <p className="text-primary text-sm font-medium text-center max-w-xs mb-10 flex items-center gap-1.5">
-                <span>👆</span> {currentStep.direction}
+                {currentStep.direction}
               </p>
             )}
             {!currentStep.direction && <div className="mb-10" />}
