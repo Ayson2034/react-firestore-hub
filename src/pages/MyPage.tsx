@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 import { LogOut, Phone, Calendar, Shield, Package, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo.png";
+const logo = "/logo.webp";
 
 export default function MyPage() {
   const { user, logout } = useAuth();

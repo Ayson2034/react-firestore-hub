@@ -5,7 +5,7 @@ import { getUserByPhoneAndSerial } from "@/services/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import logo from "@/assets/logo.png";
+const logo = "/logo.webp";
 
 export default function LoginPage() {
   const [phone, setPhone] = useState("");
