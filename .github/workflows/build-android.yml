@@ -34,7 +34,11 @@ jobs:
         run: npx cap sync android
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/joseonhealer.keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/joseonhealer.keystore
+          echo "--- Keystore verification ---"
+          keytool -list -keystore android/app/joseonhealer.keystore -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -v 2>&1 | grep -E "SHA1|Alias|Type"
+          echo "--- Expected SHA1: 9A:79:1F:5B:0D:02:53:32:82:DE:79:B8:CC:4F:CD:5B:62:CA:CE:98 ---"
 
       - name: Build signed AAB
         working-directory: android
@@ -43,6 +47,10 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Verify AAB signature
+        run: |
+          jarsigner -verify -verbose -certs android/app/build/outputs/bundle/release/app-release.aab 2>&1 | grep -E "SHA1|certificate|signed"
 
       - name: Upload signed AAB
         uses: actions/upload-artifact@v4
