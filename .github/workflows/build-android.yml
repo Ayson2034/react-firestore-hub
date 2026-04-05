@@ -36,21 +36,31 @@ jobs:
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/joseonhealer.keystore
-          echo "--- Keystore verification ---"
-          keytool -list -keystore android/app/joseonhealer.keystore -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -v 2>&1 | grep -E "SHA1|Alias|Type"
-          echo "--- Expected SHA1: 9A:79:1F:5B:0D:02:53:32:82:DE:79:B8:CC:4F:CD:5B:62:CA:CE:98 ---"
+          keytool -list -keystore android/app/joseonhealer.keystore -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -v 2>&1 | grep "SHA1"
 
-      - name: Build signed AAB
-        working-directory: android
-        run: chmod +x gradlew && ./gradlew bundleRelease
+      - name: Sign AAB with jarsigner directly
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew bundleRelease
+          echo "=== AAB built, now re-signing with correct keystore ==="
+          # Remove existing signature
+          zip -d app/build/outputs/bundle/release/app-release.aab "META-INF/*" || true
+          # Re-sign with EAS keystore
+          jarsigner -verbose \
+            -sigalg SHA256withRSA \
+            -digestalg SHA-256 \
+            -keystore app/joseonhealer.keystore \
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -keypass "${{ secrets.KEY_PASSWORD }}" \
+            app/build/outputs/bundle/release/app-release.aab \
+            "${{ secrets.KEY_ALIAS }}"
+          echo "=== Verify final signature ==="
+          keytool -printcert -jarfile app/build/outputs/bundle/release/app-release.aab 2>&1 | grep "SHA1"
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Verify AAB signature
-        run: |
-          jarsigner -verify -verbose -certs android/app/build/outputs/bundle/release/app-release.aab 2>&1 | grep -E "SHA1|certificate|signed"
 
       - name: Upload signed AAB
         uses: actions/upload-artifact@v4
