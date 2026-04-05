@@ -33,46 +33,19 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
-      - name: Generate Keystore
-        run: |
-          keytool -genkeypair \
-            -v \
-            -storetype PKCS12 \
-            -keystore android/app/joseonhealer.keystore \
-            -keyalg RSA \
-            -keysize 2048 \
-            -validity 10000 \
-            -alias joseonhealer \
-            -storepass "$KEYSTORE_PASSWORD" \
-            -keypass "$KEYSTORE_PASSWORD" \
-            -dname "CN=JoseonHealer, OU=Mobile, O=JoseonHealer, L=Seoul, ST=Seoul, C=KR"
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      - name: Decode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/joseonhealer.keystore
 
       - name: Build signed AAB
         working-directory: android
         run: chmod +x gradlew && ./gradlew bundleRelease
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-
-      - name: Build APK (debug)
-        working-directory: android
-        run: ./gradlew assembleDebug
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload signed AAB
         uses: actions/upload-artifact@v4
         with:
           name: android-aab-signed
           path: android/app/build/outputs/bundle/release/*.aab
-
-      - name: Upload APK (debug)
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk-debug
-          path: android/app/build/outputs/apk/debug/*.apk
-
-      - name: Upload Keystore (backup - download immediately!)
-        uses: actions/upload-artifact@v4
-        with:
-          name: keystore-backup
-          path: android/app/joseonhealer.keystore
