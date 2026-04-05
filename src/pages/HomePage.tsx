@@ -6,7 +6,7 @@ import { isRfDay } from "@/data/carePrograms";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Flame, Zap, Trophy, Shield, Sparkles } from "lucide-react";
 import { format } from "date-fns";
-import logo from "@/assets/logo.png";
+const logo = "/logo.webp";
 
 export default function HomePage() {
   const { user } = useAuth();
