@@ -64,13 +64,9 @@ export default function HomePage() {
         <p className="text-lg font-bold">
           {completedToday ? "오늘 케어 완료" : "케어 시작하기"}
         </p>
-        <p className="text-sm opacity-80 mt-1">
-          {completedToday
-            ? "내일도 함께해요"
-            : rfToday
-            ? "오늘은 RF 케어일"
-            : "오늘은 회복일"}
-        </p>
+        {completedToday && (
+          <p className="text-sm opacity-80 mt-1">내일도 함께해요</p>
+        )}
       </button>
 
       {/* 90-day Challenge */}
